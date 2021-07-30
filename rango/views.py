@@ -25,8 +25,7 @@ def index(request):
     return render(request, 'rango/index.html', context=context_dict)
 
 def about(request):
-    context_dict = {'boldmessage': 'This tutorial has been put together by Catherine Maxwell.'}
-    return render(request, 'rango/about.html', context=context_dict)
+    return render(request, 'rango/about.html', {})
 
 def add_category(request):
     form = CategoryForm(request.POST)
@@ -36,7 +35,7 @@ def add_category(request):
 
         if form.is_valid():
             form.save(commit=True)
-            return redirect('/rango/')
+            return redirect(reverse('rango:index'))
         else:
             print(form.errors)
 
@@ -65,7 +64,7 @@ def add_page(request, category_name_slug):
         category = None
 
     if category is None:
-        return redirect('/rango/')
+        return redirect(reverse('rango:index'))
 
     form = PageForm()
 
@@ -79,9 +78,7 @@ def add_page(request, category_name_slug):
                 page.views = 0
                 page.save()
 
-                return redirect(reverse('rango:show_category',
-                                        kwargs={'category_name_slug':
-                                                category_name_slug}))
+                return redirect(reverse('rango:show_category', kwargs={'category_name_slug': category_name_slug}))
         else:
             print(form.errors)
         
