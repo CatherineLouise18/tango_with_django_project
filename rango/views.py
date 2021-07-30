@@ -154,7 +154,7 @@ def register(request):
 
 @login_required
 def add_category(request):
-    form = CategoryForm(request.POST)
+    form = CategoryForm()
 
     if request.method == 'POST':
         form = CategoryForm(request.POST)
